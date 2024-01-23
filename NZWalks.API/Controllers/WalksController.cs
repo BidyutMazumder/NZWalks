@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.Models.Domain;
+using NZWalks.API.Models.DTO.Request;
+using NZWalks.API.Models.DTO.Response;
+using NZWalks.API.Repositories.Abstractions;
 
 namespace NZWalks.API.Controllers
 {
@@ -7,6 +12,21 @@ namespace NZWalks.API.Controllers
     [ApiController]
     public class WalksController : ControllerBase
     {
+        private readonly IMapper mapper;
+        private readonly IWalkRepository walkRepository;
 
+        public WalksController(IMapper mapper, IWalkRepository walkRepository)
+        {
+            this.mapper = mapper;
+            this.walkRepository = walkRepository;
+        }
+        public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
+        {
+            Walk walkDomainModel = mapper.Map<Walk>(addWalkRequestDto); 
+            
+            await walkRepository.CreateAsync(walkDomainModel);
+
+            return Ok(mapper.Map<WalkResponseDto>(walkDomainModel));
+        }
     }
 }
