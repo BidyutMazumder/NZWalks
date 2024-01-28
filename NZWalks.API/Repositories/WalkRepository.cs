@@ -1,4 +1,5 @@
-﻿using NZWalks.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Repositories.Abstractions;
 
@@ -18,6 +19,11 @@ namespace NZWalks.API.Repositories
             await _Context.SaveChangesAsync();
 
             return walk;
+        }
+
+        public async Task<List<Walk>> GetAllWalksAsync()
+        {
+            return await _Context.Walks.ToListAsync();
         }
     }
 }

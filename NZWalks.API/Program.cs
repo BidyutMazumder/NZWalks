@@ -5,6 +5,7 @@ using NZWalks.API.Repositories;
 using AutoMapper;
 using NZWalks.API.Mappings;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

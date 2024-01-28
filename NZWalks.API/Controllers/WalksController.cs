@@ -20,6 +20,7 @@ namespace NZWalks.API.Controllers
             this.mapper = mapper;
             this.walkRepository = walkRepository;
         }
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
             Walk walkDomainModel = mapper.Map<Walk>(addWalkRequestDto); 
@@ -27,6 +28,19 @@ namespace NZWalks.API.Controllers
             await walkRepository.CreateAsync(walkDomainModel);
 
             return Ok(mapper.Map<WalkResponseDto>(walkDomainModel));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var WalkList = await walkRepository.GetAllWalksAsync();
+
+            return Ok(new
+            {
+                success = true,
+                code = 200,
+                data = mapper.Map<List<WalkResponseDto>>(WalkList)
+            });
         }
     }
 }

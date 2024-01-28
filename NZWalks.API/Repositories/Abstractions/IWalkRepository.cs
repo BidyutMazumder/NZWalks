@@ -5,5 +5,6 @@ namespace NZWalks.API.Repositories.Abstractions
     public interface IWalkRepository
     {
         Task<Walk> CreateAsync(Walk walk);
+        Task<List<Walk>> GetAllWalksAsync();
     }
 }
