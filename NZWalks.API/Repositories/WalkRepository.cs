@@ -21,9 +21,20 @@ namespace NZWalks.API.Repositories
             return walk;
         }
 
+        public async Task<Walk?> GatByIdAsynk(Guid id)
+        {
+            return await _Context.Walks
+                .Include("Difficulty")
+                .Include("region")
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<List<Walk>> GetAllWalksAsync()
         {
-            return await _Context.Walks.ToListAsync();
+            return await _Context.Walks
+                .Include("Difficulty")
+                .Include("region")
+                .ToListAsync();
         }
     }
 }

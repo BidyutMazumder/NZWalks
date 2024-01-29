@@ -17,6 +17,7 @@ namespace NZWalks.API.Mappings
             //for walk
             CreateMap<AddWalkRequestDto, Walk>();
             CreateMap<Walk, WalkResponseDto>();
+            CreateMap<Difficulty, DifficultyResponseDto>();
         }
     }
 }

@@ -6,5 +6,6 @@ namespace NZWalks.API.Repositories.Abstractions
     {
         Task<Walk> CreateAsync(Walk walk);
         Task<List<Walk>> GetAllWalksAsync();
+        Task<Walk?> GatByIdAsynk(Guid id);
     }
 }

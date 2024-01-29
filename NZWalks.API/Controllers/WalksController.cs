@@ -42,5 +42,20 @@ namespace NZWalks.API.Controllers
                 data = mapper.Map<List<WalkResponseDto>>(WalkList)
             });
         }
+        [HttpGet]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var walk = await walkRepository.GatByIdAsynk(id);
+
+            return Ok(new
+            {
+                success = true,
+                code = 200,
+                data = mapper.Map<WalkResponseDto>(walk)
+            });
+
+        }
     }
 }
