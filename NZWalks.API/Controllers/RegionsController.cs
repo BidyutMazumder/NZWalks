@@ -9,7 +9,7 @@ using NZWalks.API.Repositories.Abstractions;
 
 namespace NZWalks.API.Controllers
 {
-    //https://localhost:44305/api/regions
+   
     [Route("api/[controller]")]
     [ApiController]
     public class RegionsController : ControllerBase
@@ -61,6 +61,8 @@ namespace NZWalks.API.Controllers
 
 
         }
+
+
 
         [HttpPut]
         [Route("{id:guid}")]
