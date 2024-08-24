@@ -22,7 +22,10 @@ namespace NZWalks.API.Controllers
             this._regionRepository = regionRepository;
             this._mapper = mapper;
         }
-        [HttpGet]
+
+
+
+        [HttpGet]  
         public async Task<IActionResult> GetAll()
         {
 
@@ -30,6 +33,9 @@ namespace NZWalks.API.Controllers
             var regionDto = _mapper.Map<List<RegionResponseDto>>(regions);
             return Ok(regionDto);
         }
+        
+        
+        
         [HttpGet]
         [Route("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
@@ -46,20 +52,19 @@ namespace NZWalks.API.Controllers
             return Ok(regionDto);
         }
 
+        
+        
         [HttpPost]
         [ValidateModelAttribute]
         public async Task<IActionResult> Save([FromBody] AddRegionRequestDto addRegionDto)
         {
-            
-            
             var regionDomainModel = _mapper.Map<Region>(addRegionDto);
+
             regionDomainModel = await _regionRepository.CreateAsync(regionDomainModel);
+
             var regionDto = _mapper.Map<RegionResponseDto>(regionDomainModel);
+
             return CreatedAtAction(nameof(GetById), new { Id = regionDto.Id }, regionDto);
-            
-            
-
-
         }
 
 
@@ -83,6 +88,8 @@ namespace NZWalks.API.Controllers
            
         }
 
+        
+        
         [HttpDelete]
         [Route("{id:Guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
