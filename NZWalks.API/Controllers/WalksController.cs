@@ -36,9 +36,14 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
+        public async Task<IActionResult> GetAll(
+            [FromQuery] string? filterOn, 
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? sortType
+            )
         {
-            var WalkList = await walkRepository.GetAllWalksAsync(filterOn, filterQuery);
+            var WalkList = await walkRepository.GetAllWalksAsync(filterOn, filterQuery, sortBy, sortType);
 
             return Ok(new
             {

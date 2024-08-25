@@ -31,7 +31,12 @@ namespace NZWalks.API.Repositories
 
         
 
-        public async Task<List<Walk>> GetAllWalksAsync(string? filterOn = null, string filterQuery = null)
+        public async Task<List<Walk>> GetAllWalksAsync(
+            string? filterOn = null, 
+            string filterQuery = null,
+            string? sortBy = null, 
+            bool? sortType = null
+            )
         {
             //return await _Context.Walks
             //    .Include("Difficulty")
@@ -54,9 +59,13 @@ namespace NZWalks.API.Repositories
 
                     walks = walks.Where(c => c.LengthInKm.ToString().Contains(filterQuery));
                 }
-
             }
             //sorting
+            if (string.IsNullOrEmpty(sortBy) == false && sortType != null)
+            {
+                
+            }
+
 
 
             return await walks.ToListAsync();
