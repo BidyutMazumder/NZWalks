@@ -56,18 +56,21 @@ namespace NZWalks.API.Repositories
                 }
                 else if (filterOn.Equals("Length", StringComparison.OrdinalIgnoreCase))
                 {
-
                     walks = walks.Where(c => c.LengthInKm.ToString().Contains(filterQuery));
                 }
             }
             //sorting
-            if (string.IsNullOrEmpty(sortBy) == false && sortType != null)
+            if (string.IsNullOrEmpty(sortBy) == false)
             {
-                
+                if(sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.OrderBy(c => c.Name);
+                }
+                else if(sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.OrderBy(c => c.LengthInKm);
+                }
             }
-
-
-
             return await walks.ToListAsync();
         }
 
