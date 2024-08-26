@@ -40,10 +40,12 @@ namespace NZWalks.API.Controllers
             [FromQuery] string? filterOn, 
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
-            [FromQuery] bool? sortType
+            [FromQuery] bool sortType,
+            [FromQuery] int pageNo = 1,
+            [FromQuery] int pageSize = 1000
             )
         {
-            var WalkList = await walkRepository.GetAllWalksAsync(filterOn, filterQuery, sortBy, sortType);
+            var WalkList = await walkRepository.GetAllWalksAsync(filterOn, filterQuery, sortBy, sortType, pageNo, pageSize);
 
             return Ok(new
             {

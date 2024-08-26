@@ -2,6 +2,7 @@
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Repositories.Abstractions;
+using System.Linq;
 
 namespace NZWalks.API.Repositories
 {
@@ -33,9 +34,11 @@ namespace NZWalks.API.Repositories
 
         public async Task<List<Walk>> GetAllWalksAsync(
             string? filterOn = null, 
-            string filterQuery = null,
+            string? filterQuery = null,
             string? sortBy = null, 
-            bool? sortType = null
+            bool sortType = true,
+            int pageNo = 1,
+            int pageSize = 1000
             )
         {
             //return await _Context.Walks
@@ -64,14 +67,21 @@ namespace NZWalks.API.Repositories
             {
                 if(sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
-                    walks = walks.OrderBy(c => c.Name);
+                    walks = sortType ? walks.OrderBy(c => c.Name) : walks.OrderByDescending(c => c.Name);
                 }
                 else if(sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
                 {
-                    walks = walks.OrderBy(c => c.LengthInKm);
-                }
+                    walks = sortType
+                        ? walks.OrderBy(c => c.LengthInKm)
+                        : walks.OrderByDescending(c => c.LengthInKm);
+                }   
             }
-            return await walks.ToListAsync();
+
+            //pagination
+
+            var skipResults = (pageNo - 1) * pageSize;
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk?> UpdateAsync(Guid id, Walk walk)
