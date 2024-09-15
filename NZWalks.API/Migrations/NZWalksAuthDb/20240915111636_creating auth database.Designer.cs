@@ -12,8 +12,8 @@ using NZWalks.API.Data;
 namespace NZWalks.API.Migrations.NZWalksAuthDb
 {
     [DbContext(typeof(NZWalksAuthDbContext))]
-    [Migration("20240830173442_Creating auth db")]
-    partial class Creatingauthdb
+    [Migration("20240915111636_creating auth database")]
+    partial class creatingauthdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,22 @@ namespace NZWalks.API.Migrations.NZWalksAuthDb
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9fbf2e1b-1905-45ea-a5cf-9a2efc320484",
+                            ConcurrencyStamp = "9fbf2e1b-1905-45ea-a5cf-9a2efc320484",
+                            Name = "Reader",
+                            NormalizedName = "READER"
+                        },
+                        new
+                        {
+                            Id = "dbb5b895-4b82-418e-89ec-5b292e30f13d",
+                            ConcurrencyStamp = "dbb5b895-4b82-418e-89ec-5b292e30f13d",
+                            Name = "Writer",
+                            NormalizedName = "WRITER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

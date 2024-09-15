@@ -36,6 +36,7 @@ namespace NZWalks.API.Data
                     NormalizedName = "Writer".ToUpper()
                 }
             };
+            builder.Entity<IdentityRole>().HasData(roles);
         }
 
     }
