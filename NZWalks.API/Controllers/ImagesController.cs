@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NZWalks.API.CustomActionFilters;
+using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO.Request;
+using NZWalks.API.Repositories.Abstractions;
 
 namespace NZWalks.API.Controllers
 {
@@ -10,13 +13,31 @@ namespace NZWalks.API.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly IImageRepository imageRepository;
 
-        public async Task<IActionResult> Upload([FromBody] ImageUploadRequestDto imageUploadRequestDto)
+        public ImagesController(IImageRepository imageRepository)
+        {
+            this.imageRepository = imageRepository;
+        }
+
+        [HttpPost]
+        [Route("Upload")]
+        [ValidateModelAttribute]
+        public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto imageUploadRequestDto)
         {
             ValidateFileUpload(imageUploadRequestDto);
             if (ModelState.IsValid)
             {
-
+                var imageDomailModel = new Image
+                {
+                    File = imageUploadRequestDto.File,
+                    FileExtention = Path.GetExtension(imageUploadRequestDto.File.FileName),
+                    FileSizeBytes = imageUploadRequestDto.File.Length,
+                    FileName = imageUploadRequestDto.File.FileName,
+                    FileDescription = imageUploadRequestDto.FileDescription,
+                };
+                await imageRepository.Upload(imageDomailModel);
+                return Ok(imageDomailModel);
             }
             return BadRequest(ModelState);
         }
