@@ -33,14 +33,16 @@ namespace NZWalks.API.Controllers
         //[Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetAll()
         {
+            //throw new Exception("error");
             logger.LogInformation("GetAllRegion Action Method was invoked");
-            
+
             var regions = await _regionRepository.GetAllAsync();
 
             logger.LogInformation($"Finish GetAllRegions request with data:  {JsonSerializer.Serialize(regions)}");
 
             var regionDto = _mapper.Map<List<RegionResponseDto>>(regions);
             return Ok(regionDto);
+            
         }
         
         
