@@ -69,12 +69,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     });
 
-
-
-
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
